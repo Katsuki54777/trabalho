@@ -1,0 +1,163 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Biblioteca",
+    "version": "1.0.0",
+    "description": "API para gerenciamento de usuários, livros, categorias e empréstimos"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+
+  "tags": [
+    { "name": "Users" },
+    { "name": "Livros" },
+    { "name": "Categorias" },
+    { "name": "Emprestimos" }
+  ],
+
+  "paths": {
+
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Lista usuários",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Cria usuário",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/User" }
+          }
+        ],
+        "responses": { "201": { "description": "Criado" } }
+      }
+    },
+
+    "/livros": {
+      "get": {
+        "tags": ["Livros"],
+        "summary": "Lista livros",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "tags": ["Livros"],
+        "summary": "Cria livro",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Livro" }
+          }
+        ],
+        "responses": { "201": { "description": "Criado" } }
+      }
+    },
+
+    "/categorias": {
+      "get": {
+        "tags": ["Categorias"],
+        "summary": "Lista categorias",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "tags": ["Categorias"],
+        "summary": "Cria categoria",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Categoria" }
+          }
+        ],
+        "responses": { "201": { "description": "Criado" } }
+      }
+    },
+
+    "/emprestimos": {
+      "get": {
+        "tags": ["Emprestimos"],
+        "summary": "Lista empréstimos",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "tags": ["Emprestimos"],
+        "summary": "Cria empréstimo",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Emprestimo" }
+          }
+        ],
+        "responses": { "201": { "description": "Criado" } }
+      }
+    }
+
+  },
+
+  "definitions": {
+
+    "User": {
+      "type": "object",
+      "required": ["nome", "email", "senha"],
+      "properties": {
+        "nome": { "type": "string" },
+        "email": { "type": "string" },
+        "senha": { "type": "string" }
+      }
+    },
+
+    "Livro": {
+      "type": "object",
+      "required": ["titulo", "autor", "categoria"],
+      "properties": {
+        "titulo": { "type": "string" },
+        "autor": { "type": "string" },
+        "categoria": {
+          "type": "string",
+          "description": "ID da categoria"
+        }
+      }
+    },
+
+    "Categoria": {
+      "type": "object",
+      "required": ["nome"],
+      "properties": {
+        "nome": { "type": "string" }
+      }
+    },
+
+    "Emprestimo": {
+      "type": "object",
+      "required": ["usuario", "livro"],
+      "properties": {
+        "usuario": {
+          "type": "string",
+          "description": "ID do usuário"
+        },
+        "livro": {
+          "type": "string",
+          "description": "ID do livro"
+        },
+        "dataEmprestimo": {
+          "type": "string",
+          "format": "date"
+        },
+        "dataDevolucao": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+
+  }
+}
